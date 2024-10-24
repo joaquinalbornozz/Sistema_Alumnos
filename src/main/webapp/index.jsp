@@ -117,10 +117,11 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Alumnos <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="ListarAluMat">Alumnos con Materias</a></li>
+                    <ul class="dropdown-menu">                        
                         <li><a href="SolicitarDatos">Agregar</a></li>
                         <li><a href="Listar">Listar</a></li>
+                        <li><a href="SolicitarExamen">Agregar Examen</a></li>
+                        <li><a href="ListarAluMat">Alumnos con Materias</a></li>
                         <li><a href="SolicitarMatAlumno">Materias de un Alumno</a></li>
                     </ul>
                 </li>
