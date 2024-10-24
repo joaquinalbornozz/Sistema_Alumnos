@@ -259,7 +259,7 @@ public class Manejador extends HttpServlet {
                             Docente docente= docenteF.find(Integer.parseInt(doc));
                             Collection<Materia> materias=docente.getMateriaCollection();
                             List<MateriaHasAlumno> mha = new ArrayList<>();
-                            List<Alumno> alumnos = new ArrayList<>();
+                            //List<Alumno> alumnos = new ArrayList<>();
 
                             for (Materia mat : materias) {
                                 Collection<MateriaHasAlumno> mhaPorMateria = mat.getMateriaHasAlumnoCollection();
