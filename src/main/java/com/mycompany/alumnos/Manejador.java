@@ -261,12 +261,9 @@ public class Manejador extends HttpServlet {
                             List<MateriaHasAlumno> mha = new ArrayList<>();
                             List<Alumno> alumnos = new ArrayList<>();
 
-                            // Recorrer las materias y obtener los registros asociados en MateriaHasAlumno
                             for (Materia mat : materias) {
-                                // Asumiendo que cada materia tiene una colección de MateriaHasAlumno
                                 Collection<MateriaHasAlumno> mhaPorMateria = mat.getMateriaHasAlumnoCollection();
 
-                                // Agregar todos los registros encontrados a la lista mha
                                 mha.addAll(mhaPorMateria);
                             }
                             /*for(MateriaHasAlumno m :mha){
