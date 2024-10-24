@@ -7,6 +7,7 @@ import com.mycompany.alumnos.modelos.Carrera;
 import com.mycompany.alumnos.modelos.Materia;
 import com.mycompany.alumnos.modelos.MateriaHasAlumno;
 import com.mycompany.alumnos.modelos.Docente;
+import com.mycompany.alumnos.modelos.MateriaHasAlumnoPK;
 import com.mycompany.alumnos.sesiones.FacultadFacade;
 import com.mycompany.alumnos.sesiones.AlumnoFacade;
 import com.mycompany.alumnos.sesiones.CarreraFacade;
@@ -35,8 +36,11 @@ import jakarta.transaction.NotSupportedException;
 import jakarta.transaction.RollbackException;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.UserTransaction;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 
@@ -177,6 +181,35 @@ public class Manejador extends HttpServlet {
 
                         url = "index.jsp";
                         break;
+                    case "/SolicitarExamen":
+                        request.setAttribute("alumnos", alumnoF.findAll());
+                        request.setAttribute("materias", materiaF.findAll());
+                        url = "/WEB-INF/vista/Solicitar_Examen.jsp";
+                        break;
+                    case "/AgregarExamen":
+                        Integer idAlu= Integer.parseInt(request.getParameter("alu"));
+                        Integer idMat=Integer.parseInt(request.getParameter("mat"));
+                        alumno = alumnoF.find(idAlu);
+                        materia= materiaF.find(idMat);
+                        Float nota= Float.parseFloat(request.getParameter("nota")) ;
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Ajusta el formato según lo que se reciba
+                        Date fecha = sdf.parse(request.getParameter("fecha"));
+                        MateriaHasAlumnoPK maPK =new MateriaHasAlumnoPK();
+                        MateriaHasAlumno ma= new MateriaHasAlumno();
+                        maPK.setFecha(fecha);
+                        maPK.setMateriaidMateria(idMat);
+                        maPK.setAlumnoidAlumno(idAlu);
+                        ma.setAlumno(alumno);
+                        ma.setMateria(materia);
+                        ma.setNota(nota);
+                        ma.setMateriaHasAlumnoPK(maPK);
+                        utx.begin();
+                        em = emf.createEntityManager();
+                        em.persist(ma);
+                        utx.commit();
+
+                        url = "index.jsp";
+                        break;
                     case "/Listar":
                         
                         request.setAttribute("lista",alumnoF.findAll());
@@ -283,7 +316,7 @@ public class Manejador extends HttpServlet {
                 } catch (ServletException | IOException ex) {
                 }
                 
-            } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException ex) {
+            } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException | ParseException ex) {
             Logger.getLogger(Manejador.class.getName()).log(Level.SEVERE, null, ex);
             }	    
 
